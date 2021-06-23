@@ -13,6 +13,5 @@ namespace MystPaste.NET.Clients
         }
         
         protected ApiRequester ApiRequester { get; private set; }
-        protected Uri BaseUri = new Uri("https://paste.myst.rs/api/v2");
     }
 }

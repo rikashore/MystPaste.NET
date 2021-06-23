@@ -7,7 +7,8 @@ namespace MystPaste.NET
 {
     public class ApiRequester
     {
-        readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
+        private readonly Uri _baseUri = new Uri("https://paste.myst.rs/api/v2/");
 
         public ApiRequester()
         {
@@ -16,7 +17,7 @@ namespace MystPaste.NET
 
         public async Task<T> Get<T>(Uri uri)
         {
-            var res = await _httpClient.GetAsync(uri);
+            var res = await _httpClient.GetAsync(new Uri(_baseUri, uri));
             res.EnsureSuccessStatusCode();
 
             var s = await res.Content.ReadAsStreamAsync();
