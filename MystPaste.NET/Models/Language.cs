@@ -8,6 +8,9 @@ namespace MystPaste.NET.Models
         [JsonProperty("ext")]
         public List<string> Extensions { get; set; }
         
+        [JsonProperty("alias")]
+        public List<string> Aliases { get; set; }
+        
         [JsonProperty("name")]
         public string Name { get; set; }
 
