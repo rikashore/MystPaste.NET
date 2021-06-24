@@ -46,8 +46,7 @@ namespace MystPaste.NET
                     ? "The server returned an exception with unknown reasons."
                     : $"The server returned an exception: {err.ErrorMessage}");
             }
-
-
+            
             return s.DeserializeTo<T>();
         }
 
@@ -56,7 +55,7 @@ namespace MystPaste.NET
         /// </summary>
         public async Task<bool> Get(Uri uri)
         {
-            var res = await _httpClient.GetAsync(new Uri(_baseUri, uri));
+            var res = await _httpClient.GetAsync(uri);
             return res.IsSuccessStatusCode;
         }
     }
