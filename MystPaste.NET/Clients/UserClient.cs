@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MystPaste.NET.Helpers;
 using MystPaste.NET.Models;
@@ -44,13 +45,31 @@ namespace MystPaste.NET.Clients
         /// Is only optional when a token has not been passed to the <see cref="MystPasteClient"/>.</param>
         /// <returns>A <see cref="CurrentUser"/> object.</returns>
         /// <exception cref="ArgumentNullException">Throws when an auth token has not been passed to the client or the method.</exception>
-        public async Task<CurrentUser> GetCurrentUserAsync(string auth = null)
+        public async Task<CurrentUser> GetAuthenticatedUserAsync(string auth = null)
         {
             auth ??= ApiRequester.Auth;
             if (auth is null)
                 throw new ArgumentNullException(nameof(auth), "An authorization token needs to be passed in the constructor of the MystPasteClient or to the method");
 
             return await ApiRequester.Get<CurrentUser>(ApiUrls.CurrentUser(), auth);
+        }
+
+        /// <summary>
+        /// Gets the currently authenticated user's paste's ids.
+        /// </summary>
+        /// <param name="auth">
+        /// The token of the user to authenticate.
+        /// Is only optional when a token has not been passed to the <see cref="MystPasteClient"/>.
+        /// </param>
+        /// <returns>A <see cref="List{T}"/> of strings which are the Ids of the pastes.</returns>
+        /// <exception cref="ArgumentNullException">Throws when an auth token has not been passed to the client or the method.</exception>
+        public async Task<List<string>> GetAuthenticatedUserPastesAsync(string auth = null)
+        {
+            auth ??= ApiRequester.Auth;
+            if (auth is null)
+                throw new ArgumentNullException(nameof(auth), "An authorization token needs to be passed in the constructor of the MystPasteClient or to the method");
+
+            return await ApiRequester.Get<List<string>>(ApiUrls.CurrentUserPastes(), auth);
         }
     }
 }
