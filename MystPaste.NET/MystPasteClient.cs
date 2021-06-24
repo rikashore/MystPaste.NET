@@ -17,6 +17,7 @@ namespace MystPaste.NET
             Data = new DataClient(apiRequester);
             User = new UserClient(apiRequester);
             Time = new TimeClient(apiRequester);
+            Paste = new PasteClient(apiRequester);
         }
         
         public MystPasteClient() : this(null)
@@ -36,5 +37,7 @@ namespace MystPaste.NET
         /// The <see cref="TimeClient"/> to access timestamp related info.
         /// </summary>
         public TimeClient Time { get; }
+        
+        public PasteClient Paste { get; }
     }
 }
