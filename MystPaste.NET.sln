@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MystPaste.NET", "MystPaste.NET\MystPaste.NET.csproj", "{2542B0A8-EBF7-49CA-AF6F-AB0D75D7E2FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MystPaste.NET.Example", "MystPaste.NET.Example\MystPaste.NET.Example.csproj", "{316AF951-0EE3-496F-B361-13352F4B4A36}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{2542B0A8-EBF7-49CA-AF6F-AB0D75D7E2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2542B0A8-EBF7-49CA-AF6F-AB0D75D7E2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2542B0A8-EBF7-49CA-AF6F-AB0D75D7E2FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{316AF951-0EE3-496F-B361-13352F4B4A36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{316AF951-0EE3-496F-B361-13352F4B4A36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{316AF951-0EE3-496F-B361-13352F4B4A36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{316AF951-0EE3-496F-B361-13352F4B4A36}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
