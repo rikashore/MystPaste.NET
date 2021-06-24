@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using MystPaste.NET.Extensions;
+using MystPaste.NET.Models;
 
 namespace MystPaste.NET
 {
@@ -13,20 +14,39 @@ namespace MystPaste.NET
         private readonly HttpClient _httpClient;
         private readonly Uri _baseUri = new Uri("https://paste.myst.rs/api/v2/");
 
-        public ApiRequester()
+        public ApiRequester(string auth)
         {
-            _httpClient = new HttpClient();
+            _httpClient = new HttpClient
+            {
+                BaseAddress = _baseUri
+            };
+
+            Auth = auth;
         }
+        
+        public string Auth { get; }
 
         /// <summary>
         /// Makes a GET request to the specified url.
         /// </summary>
-        public async Task<T> Get<T>(Uri uri)
+        public async Task<T> Get<T>(Uri uri, string auth = null)
         {
-            var res = await _httpClient.GetAsync(new Uri(_baseUri, uri));
-            res.EnsureSuccessStatusCode();
-
+            using var requestMessage = new HttpRequestMessage(HttpMethod.Get, uri);
+            
+            if (auth is not null)
+                requestMessage.Headers.TryAddWithoutValidation("Authorization", auth);
+            
+            var res = await _httpClient.SendAsync(requestMessage);
             var s = await res.Content.ReadAsStreamAsync();
+
+            if (!res.IsSuccessStatusCode)
+            {
+                var err = s.DeserializeTo<Response>();
+                throw new Exception(err is null
+                    ? "The server returned an exception with unknown reasons."
+                    : $"The server returned an exception: {err.ErrorMessage}");
+            }
+
 
             return s.DeserializeTo<T>();
         }

@@ -7,14 +7,21 @@ namespace MystPaste.NET
     /// </summary>
     public class MystPasteClient
     {
-        public MystPasteClient()
+        /// <summary>
+        /// Represents an authorised MystPasteClient.
+        /// </summary>
+        /// <param name="auth">The token of the user to authenticate with.</param>
+        public MystPasteClient(string auth)
         {
-            var apiRequester = new ApiRequester();
+            var apiRequester = new ApiRequester(auth);
             Data = new DataClient(apiRequester);
             User = new UserClient(apiRequester);
             Time = new TimeClient(apiRequester);
         }
         
+        public MystPasteClient() : this(null)
+        { }
+
         /// <summary>
         /// The <see cref="DataClient"/> to access language related data.
         /// </summary>
