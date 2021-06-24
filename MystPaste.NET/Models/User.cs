@@ -41,12 +41,18 @@ namespace MystPaste.NET.Models
         /// How long the user has been a supporter. 0 if not a supporter.
         /// </summary>
         [JsonProperty("supporterLength")]
-        public uint SupporterLength { get; set; }
+        public int SupporterLength { get; set; }
         
         /// <summary>
         /// Whether a user has contributed to Paste Myst.
         /// </summary>
         [JsonProperty("contributor")]
         public bool IsContributor { get; set; }
+
+        /// <summary>
+        /// Whether the user is a supporter or not.
+        /// </summary>
+        [JsonIgnore] 
+        public bool IsSupporter => SupporterLength > 0;
     }
 }
