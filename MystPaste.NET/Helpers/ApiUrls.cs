@@ -33,11 +33,15 @@ namespace MystPaste.NET.Helpers
             => "user/{0}".FormatUri(username);
 
         /// <summary>
-        /// The endpoint to get the authenticated user
+        /// The endpoint to get the authenticated user.
         /// </summary>
         public static Uri CurrentUser()
             => "user/self".FormatUri();
 
+        /// <summary>
+        /// The endpoint to get the authenticated user's paste ids.
+        /// </summary>
+        /// <returns></returns>
         public static Uri CurrentUserPastes()
             => "user/self/pastes".FormatUri();
 
@@ -46,5 +50,8 @@ namespace MystPaste.NET.Helpers
         /// </summary>
         public static Uri ExpirationTimestamp(long timestamp, string duration)
             => "time/expiresInToUnixTime?createdAt={0}&expiresIn={1}".FormatUri(timestamp, duration);
+
+        public static Uri Paste(string pasteId)
+            => "paste/{0}".FormatUri(pasteId);
     }
 }
