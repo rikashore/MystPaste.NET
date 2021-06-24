@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MystPaste.NET.Helpers.Expiry;
 
 namespace MystPaste.NET.Example
 {
@@ -11,11 +12,13 @@ namespace MystPaste.NET.Example
 
             var res = await myst.Data.GetLanguageByNameAsync("C#");
             
-            Console.WriteLine(res.Color);
+            Console.WriteLine(res.HexColor);
             
             var ext = await myst.Data.GetLanguageByExtensionAsync(res.Extensions[0]);
             
             Console.WriteLine(ext.Name);
+
+            var timestamp = await myst.Time.GetExpiresWhenTimestamp(1588441258, new MystExpiresIn(1, ExpiresIn.Weeks));
         }
     }
 }
