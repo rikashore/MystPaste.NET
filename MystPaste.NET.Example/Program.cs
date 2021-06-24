@@ -14,10 +14,10 @@ namespace MystPaste.NET.Example
             
             Console.WriteLine(lang.Name);
 
-            var res = await myst.Paste.GetPasteAsync("542hebu9");
+            var res = await myst.Paste.GetPasteAsync("jejepxp3");
             
-            Console.WriteLine();
-            Console.WriteLine(res.Title);
+            //Console.WriteLine(res.Edits[0].EditType);
+            Console.WriteLine(res.Title + " " + res.Title.GetType());
         }
     }
 }

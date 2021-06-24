@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MystPaste.NET.Helpers;
+using MystPaste.NET.Helpers.Exceptions;
 using MystPaste.NET.Models;
 
 namespace MystPaste.NET.Clients
@@ -49,7 +50,7 @@ namespace MystPaste.NET.Clients
         {
             auth ??= ApiRequester.Auth;
             if (auth is null)
-                throw new ArgumentNullException(nameof(auth), "An authorization token needs to be passed in the constructor of the MystPasteClient or to the method");
+                throw new InvalidAuthException(nameof(auth));
 
             return await ApiRequester.Get<CurrentUser>(ApiUrls.CurrentUser(), auth);
         }
@@ -67,7 +68,7 @@ namespace MystPaste.NET.Clients
         {
             auth ??= ApiRequester.Auth;
             if (auth is null)
-                throw new ArgumentNullException(nameof(auth), "An authorization token needs to be passed in the constructor of the MystPasteClient or to the method");
+                throw new InvalidAuthException(nameof(auth));
 
             return await ApiRequester.Get<List<string>>(ApiUrls.CurrentUserPastes(), auth);
         }
