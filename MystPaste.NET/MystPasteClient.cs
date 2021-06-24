@@ -8,9 +8,9 @@ namespace MystPaste.NET
         public MystPasteClient()
         {
             var apiRequester = new ApiRequester();
-            DataClient = new DataClient(apiRequester);
+            Data = new DataClient(apiRequester);
         }
         
-        public DataClient DataClient { get; set; }
+        public DataClient Data { get; set; }
     }
 }
