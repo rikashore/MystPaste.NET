@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MystPaste.NET.Helpers;
+using MystPaste.NET.Helpers.Exceptions;
 using MystPaste.NET.Models;
 
 namespace MystPaste.NET.Clients
@@ -8,11 +9,19 @@ namespace MystPaste.NET.Clients
     {
         public PasteClient(ApiRequester apiRequester) : base(apiRequester)
         { }
-
-        // TODO Fix broken Json
-        public async Task<Paste> GetPasteAsync(string pasteId)
+        
+        public Task<Paste> GetPasteAsync(string pasteId)
         {
-            return await ApiRequester.Get<Paste>(ApiUrls.Paste(pasteId));
+            return ApiRequester.Get<Paste>(ApiUrls.Paste(pasteId));
+        }
+
+        public Task<Paste> GetPasteAsync(string pasteId, string auth)
+        {
+            auth ??= ApiRequester.Auth;
+            if (auth is null)
+                throw new InvalidAuthException(nameof(auth));
+
+            return ApiRequester.Get<Paste>(ApiUrls.Paste(pasteId), auth);
         }
     }
 }
