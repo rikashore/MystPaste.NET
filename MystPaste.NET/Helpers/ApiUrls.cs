@@ -32,6 +32,9 @@ namespace MystPaste.NET.Helpers
         public static Uri User(string username)
             => "user/{0}".FormatUri(username);
 
+        public static Uri CurrentUser()
+            => "user/self".FormatUri();
+
         /// <summary>
         /// The endpoint to get the expiration timestamp for a paste.
         /// </summary>
