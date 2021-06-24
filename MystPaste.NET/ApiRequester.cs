@@ -24,5 +24,11 @@ namespace MystPaste.NET
 
             return s.DeserializeTo<T>();
         }
+
+        public async Task<bool> Get(Uri uri)
+        {
+            var res = await _httpClient.GetAsync(new Uri(_baseUri, uri));
+            return res.IsSuccessStatusCode;
+        }
     }
 }
