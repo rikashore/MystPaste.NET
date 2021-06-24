@@ -1,5 +1,4 @@
-﻿using System;
-using MystPaste.NET.Clients;
+﻿using MystPaste.NET.Clients;
 
 namespace MystPaste.NET
 {
@@ -9,8 +8,12 @@ namespace MystPaste.NET
         {
             var apiRequester = new ApiRequester();
             Data = new DataClient(apiRequester);
+            User = new UserClient(apiRequester);
+            Time = new TimeClient(apiRequester);
         }
         
         public DataClient Data { get; set; }
+        public UserClient User { get; set; }
+        public TimeClient Time { get; set; }
     }
 }
