@@ -5,15 +5,15 @@ namespace MystPaste.NET.Models
     public class Pasty
     {
         [JsonProperty("_id")]
-        public string Id { get; }
+        public string Id { get; set; }
         
         [JsonProperty("language")]
-        public string Language { get; }
+        public string Language { get; set; }
         
         [JsonProperty("title")]
-        public string Title { get; }
+        public string Title { get; set; }
         
         [JsonProperty("code")]
-        public string Code { get; }
+        public string Code { get; set; }
     }
 }

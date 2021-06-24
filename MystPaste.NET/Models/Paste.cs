@@ -6,42 +6,42 @@ namespace MystPaste.NET.Models
     public class Paste
     {
         [JsonProperty("_id")]
-        public string Id { get; }
+        public string Id { get; set; }
         
         [JsonProperty("ownerId")]
-        public string OwnerId { get; }
+        public string OwnerId { get; set; }
         
         [JsonProperty("title")]
-        public string Title { get; }
+        public string Title { get; set; }
         
         [JsonProperty("createdAt")]
-        public ulong CreatedAt { get; }
+        public ulong CreatedAt { get; set; }
         
         [JsonProperty("expiresIn")]
-        public string ExpiresIn { get; }
+        public string ExpiresIn { get; set; }
         
         [JsonProperty("deletesAt")]
-        public ulong DeletesAt { get; }
+        public ulong DeletesAt { get; set; }
         
         [JsonProperty("stars")]
-        public ulong Stars { get; }
+        public ulong Stars { get; set; }
         
         [JsonProperty("isPrivate")]
-        public bool IsPrivate { get; }
+        public bool IsPrivate { get; set; }
         
         [JsonProperty("isPublic")]
-        public bool IsPublic { get; }
+        public bool IsPublic { get; set; }
         
         [JsonProperty("encrypted")]
-        public bool Encrypted { get; }
+        public bool Encrypted { get; set; }
         
         [JsonProperty("tags")]
-        public List<string> Tags { get; }
+        public List<string> Tags { get; set; }
         
         [JsonProperty("pasties")]
-        public List<Pasty> Pasties { get; }
+        public List<Pasty> Pasties { get; set; }
         
         [JsonProperty("edits")]
-        public List<Edit> Edits { get; }
+        public List<Edit> Edits { get; set; }
     }
 }
