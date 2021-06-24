@@ -16,5 +16,8 @@ namespace MystPaste.NET.Helpers
 
         public static Uri User(string username)
             => "user/{0}".FormatUri(username);
+
+        public static Uri ExpirationTimestamp(long timestamp, string duration)
+            => "time/expiresInToUnixTime?createdAt={0}&expiresIn={1}".FormatUri(timestamp, duration);
     }
 }
