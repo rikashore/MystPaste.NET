@@ -11,6 +11,6 @@ namespace MystPaste.NET.Models
         /// The integer representing the unix timestamp for expiration. 0 if expiration or paste is invalid.
         /// </summary>
         [JsonProperty("result")]
-        public int ExpirationDate { get; }
+        public ulong ExpirationDate { get; }
     }
 }
