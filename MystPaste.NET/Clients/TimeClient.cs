@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MystPaste.NET.Helpers;
 using MystPaste.NET.Helpers.Expiry;
+using MystPaste.NET.Models;
 
 namespace MystPaste.NET.Clients
 {
@@ -26,7 +27,7 @@ namespace MystPaste.NET.Clients
         /// </code>
         /// </example>
         /// <returns>A long representing the unix timestamp when the paste will expire.</returns>
-        public async Task<long> GetExpiresWhenTimestamp(long createdAt, int duration, ExpiresIn expiresIn)
+        public async Task<Timestamp> GetExpiresWhenTimestamp(long createdAt, int duration, ExpiresIn expiresIn)
         {
             return await GetExpiresWhenTimestamp(createdAt, new MystExpiresIn(duration, expiresIn));
         }
@@ -44,7 +45,7 @@ namespace MystPaste.NET.Clients
         /// </example>
         /// <returns>A long representing the unix timestamp when the paste will expire.</returns>
         /// <exception cref="ArgumentException">Throws when <paramref name="durationType"/> is not a valid duration character.</exception>
-        public async Task<long> GetExpiresWhenTimestamp(long createdAt, int duration, char durationType)
+        public async Task<Timestamp> GetExpiresWhenTimestamp(long createdAt, int duration, char durationType)
         {
             var expiresIn = durationType switch
             {
@@ -71,7 +72,7 @@ namespace MystPaste.NET.Clients
         /// </example>
         /// <returns>A long representing the unix timestamp when the paste will expire.</returns>
         /// <exception cref="ArgumentException">Throws when <paramref name="expiresIn"/> does not have a valid <see cref="ExpiresIn"/>.</exception>
-        public async Task<long> GetExpiresWhenTimestamp(long createdAt, IMystExpiresIn expiresIn)
+        public async Task<Timestamp> GetExpiresWhenTimestamp(long createdAt, IMystExpiresIn expiresIn)
         {
             var duration = string.Empty;
             
@@ -93,7 +94,7 @@ namespace MystPaste.NET.Clients
                 duration = $"{mystExpiresIn.Duration}{durationChar}";
             }
 
-            return await ApiRequester.Get<long>(ApiUrls.ExpirationTimestamp(createdAt, duration));
+            return await ApiRequester.Get<Timestamp>(ApiUrls.ExpirationTimestamp(createdAt, duration));
         }
     }
 }
