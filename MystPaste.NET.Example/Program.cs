@@ -19,6 +19,10 @@ namespace MystPaste.NET.Example
             Console.WriteLine(ext.Name);
 
             var timestamp = await myst.Time.GetExpiresWhenTimestamp(1588441258, new MystExpiresIn(1, ExpiresIn.Weeks));
+
+            // var self = await myst.User.GetCurrentUserAsync();
+            
+            Console.WriteLine(timestamp.ExpirationDate);
         }
     }
 }
