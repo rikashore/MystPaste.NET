@@ -10,19 +10,14 @@ namespace MystPaste.NET.Example
         {
             var myst = new MystPasteClient();
 
-            var res = await myst.Data.GetLanguageByNameAsync("C#");
+            var lang = await myst.Data.GetLanguageByNameAsync("javascript");
             
-            Console.WriteLine(res.HexColor);
-            
-            var ext = await myst.Data.GetLanguageByExtensionAsync(res.Extensions[0]);
-            
-            Console.WriteLine(ext.Name);
+            Console.WriteLine(lang.Name);
 
-            var timestamp = await myst.Time.GetExpiresWhenTimestamp(1588441258, new MystExpiresIn(1, ExpiresIn.Weeks));
-
-            // var self = await myst.User.GetCurrentUserAsync();
+            var res = await myst.Paste.GetPasteAsync("542hebu9");
             
-            Console.WriteLine(timestamp.ExpirationDate);
+            Console.WriteLine();
+            Console.WriteLine(res.Title);
         }
     }
 }
