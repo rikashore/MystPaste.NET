@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using Newtonsoft.Json;
 
-namespace MystPaste.NET.Models
+namespace MystPaste.NET
 {
     /// <summary>
     /// Represents a model to map the response for.

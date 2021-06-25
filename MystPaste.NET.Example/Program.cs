@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MystPaste.NET.Helpers.Builders;
-using MystPaste.NET.Helpers.Expiry;
-using MystPaste.NET.Models;
 
 namespace MystPaste.NET.Example
 {

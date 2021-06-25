@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using MystPaste.NET.Helpers.Exceptions;
-using MystPaste.NET.Helpers.Expiry;
 using MystPaste.NET.Models;
 
-namespace MystPaste.NET.Helpers.Builders
+namespace MystPaste.NET
 {
     public class PasteFormBuilder
     {
@@ -14,7 +12,7 @@ namespace MystPaste.NET.Helpers.Builders
         public string Auth { get; set; }
         public string Title { get; set; }
 
-        public string ExpiresIn { get; set; }
+        public string ExpiresInString { get; set; }
         
         public bool IsPrivate { get; set; }
         
@@ -46,17 +44,17 @@ namespace MystPaste.NET.Helpers.Builders
 
         public PasteFormBuilder WithExpiresIn(ExpiresIn expiresIn)
         {
-            ExpiresIn = expiresIn switch
+            ExpiresInString = expiresIn switch
             {
-                Expiry.ExpiresIn.OneHour => "1h",
-                Expiry.ExpiresIn.TwoHours => "2h",
-                Expiry.ExpiresIn.TenHours => "10h",
-                Expiry.ExpiresIn.OneDay => "1d",
-                Expiry.ExpiresIn.TwoDays => "2d",
-                Expiry.ExpiresIn.OneWeek => "1w",
-                Expiry.ExpiresIn.OneMonth => "1m",
-                Expiry.ExpiresIn.OneYear => "1y",
-                Expiry.ExpiresIn.Never => "never",
+                ExpiresIn.OneHour => "1h",
+                ExpiresIn.TwoHours => "2h",
+                ExpiresIn.TenHours => "10h",
+                ExpiresIn.OneDay => "1d",
+                ExpiresIn.TwoDays => "2d",
+                ExpiresIn.OneWeek => "1w",
+                ExpiresIn.OneMonth => "1m",
+                ExpiresIn.OneYear => "1y",
+                ExpiresIn.Never => "never",
                 _ => throw new ArgumentException("Invalid ExpiresIn", nameof(expiresIn))
             };
 
@@ -118,7 +116,7 @@ namespace MystPaste.NET.Helpers.Builders
             Validate();
             return new PasteForm
             {
-                ExpiresIn = ExpiresIn,
+                ExpiresIn = ExpiresInString,
                 Title = Title,
                 IsPublic = IsPublic,
                 IsPrivate = IsPrivate,

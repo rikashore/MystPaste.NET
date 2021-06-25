@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MystPaste.NET.Clients
+namespace MystPaste.NET
 {
     /// <summary>
     /// Represents a base abstract class which all clients inherit.

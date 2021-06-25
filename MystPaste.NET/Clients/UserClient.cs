@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MystPaste.NET.Helpers;
-using MystPaste.NET.Helpers.Exceptions;
 using MystPaste.NET.Models;
 
-namespace MystPaste.NET.Clients
+namespace MystPaste.NET
 {
-    // TODO Map endpoints that require auth
     /// <summary>
     /// Represents a client to get information about users.
     /// </summary>

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MystPaste.NET.Models
+namespace MystPaste.NET
 {
     /// <summary>
     /// A unix timestamp representing an expiration date for a paste.

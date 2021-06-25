@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MystPaste.NET.Helpers;
-using MystPaste.NET.Helpers.Expiry;
 using MystPaste.NET.Models;
 
-namespace MystPaste.NET.Clients
+namespace MystPaste.NET
 {
     /// <summary>
     /// Represents a client to get information

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using MystPaste.NET.Helpers.Pastes;
 using Newtonsoft.Json;
 
 namespace MystPaste.NET.Models
@@ -20,7 +19,7 @@ namespace MystPaste.NET.Models
         public string EditId { get; set; }
 
         /// <summary>
-        /// Gets the <see cref="MystPaste.NET.Helpers.Pastes.EditType"/>
+        /// Gets the <see cref="MystPaste.NET.EditType"/>
         /// </summary>
         [JsonProperty("editType")] 
         public EditType EditType { get; set; }

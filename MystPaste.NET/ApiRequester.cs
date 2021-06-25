@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using MystPaste.NET.Extensions;
 using MystPaste.NET.Models;
 
 namespace MystPaste.NET
@@ -95,6 +94,27 @@ namespace MystPaste.NET
                     ? "The server returned an exception with unknown reasons."
                     : $"The server returned an exception: {err.ErrorMessage}");
             }
+        }
+
+        public async Task<T> Patch<T>(Uri uri, string content, string auth)
+        {
+            using var requestMessage = new HttpRequestMessage(HttpMethod.Patch, uri);
+            requestMessage.Headers.TryAddWithoutValidation("Authorization", auth);
+
+            requestMessage.Content = new StringContent(content);
+
+            var res = await _httpClient.SendAsync(requestMessage);
+            var s = await res.Content.ReadAsStreamAsync();
+
+            if (!res.IsSuccessStatusCode)
+            {
+                var err = s.DeserializeTo<Response>();
+                throw new Exception(err is null
+                    ? "The server returned an exception with unknown reasons."
+                    : $"The server returned an exception: {err.ErrorMessage}");
+            }
+
+            return s.DeserializeTo<T>();
         }
     }
 }

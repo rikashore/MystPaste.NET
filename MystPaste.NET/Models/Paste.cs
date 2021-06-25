@@ -97,5 +97,8 @@ namespace MystPaste.NET.Models
         /// </remarks>
         [JsonProperty("edits")]
         public List<Edit> Edits { get; set; }
+
+        public PasteEditBuilder CreateEditForm()
+            => new PasteEditBuilder(this);
     }
 }

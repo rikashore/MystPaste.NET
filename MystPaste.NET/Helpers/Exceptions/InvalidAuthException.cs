@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MystPaste.NET.Helpers.Exceptions
+namespace MystPaste.NET
 {
     public class InvalidAuthException : Exception
     {

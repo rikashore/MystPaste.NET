@@ -1,7 +1,6 @@
 ﻿using System;
-using MystPaste.NET.Extensions;
 
-namespace MystPaste.NET.Helpers
+namespace MystPaste.NET
 {
     /// <summary>
     /// A utility class that hosts the endpoint URLs.
@@ -58,6 +57,9 @@ namespace MystPaste.NET.Helpers
             => "paste".FormatUri();
 
         public static Uri DeletePost(string pasteId)
+            => "paste/{0}".FormatUri(pasteId);
+
+        public static Uri EditPost(string pasteId)
             => "paste/{0}".FormatUri(pasteId);
     }
 }

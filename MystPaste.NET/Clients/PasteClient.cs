@@ -1,10 +1,8 @@
 ﻿using System.Threading.Tasks;
-using MystPaste.NET.Helpers;
-using MystPaste.NET.Helpers.Exceptions;
 using MystPaste.NET.Models;
 using Newtonsoft.Json;
 
-namespace MystPaste.NET.Clients
+namespace MystPaste.NET
 {
     public class PasteClient : ApiClient
     {
@@ -54,6 +52,15 @@ namespace MystPaste.NET.Clients
                 throw new InvalidAuthException(nameof(auth));
 
             return ApiRequester.Delete(ApiUrls.DeletePost(pasteId), auth);
+        }
+
+        public Task EditPostAsync(string pasteId, PasteEditBuilder editBuilder, string auth = null)
+        {
+            auth ??= ApiRequester.Auth;
+            if (auth is null)
+                throw new InvalidAuthException(nameof(auth));
+
+            return ApiRequester.Patch<Paste>(ApiUrls.EditPost(pasteId), JsonConvert.SerializeObject(editBuilder), auth);
         }
     }
 }

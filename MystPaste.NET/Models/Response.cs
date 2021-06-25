@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MystPaste.NET.Models
+namespace MystPaste.NET
 {
     /// <summary>
     /// Represents a model for an API error response.

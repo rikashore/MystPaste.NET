@@ -1,4 +1,4 @@
-﻿namespace MystPaste.NET.Helpers.Pastes
+﻿namespace MystPaste.NET
 {
     public enum EditType
     {

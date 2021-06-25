@@ -1,6 +1,4 @@
-﻿using MystPaste.NET.Clients;
-
-namespace MystPaste.NET
+﻿namespace MystPaste.NET
 {
     /// <summary>
     /// Represents the main client to access the API.
