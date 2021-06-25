@@ -2,7 +2,7 @@
 {
     public enum ExpiresIn
     {
-        Never,
+        Never,       // string form -> "never"
         OneHour,     // string form -> "1h"
         TwoHours,    // string form -> "2h"
         TenHours,    // string form -> "10h"
