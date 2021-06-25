@@ -14,13 +14,13 @@ namespace MystPaste.NET.Models
         /// <summary>
         /// An optional list of strings with the extensions used by the language.
         /// </summary>
-        [JsonProperty("ext")]
+        [JsonProperty("ext", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public List<string> Extensions { get; set; }
-        
+
         /// <summary>
         /// An optional list of strings with the aliases of the language.
         /// </summary>
-        [JsonProperty("alias")]
+        [JsonProperty("alias", NullValueHandling = NullValueHandling.Ignore, DefaultValueHandling = DefaultValueHandling.Ignore)]
         public List<string> Aliases { get; set; }
         
         /// <summary>
@@ -52,5 +52,11 @@ namespace MystPaste.NET.Models
         /// </summary>
         [JsonIgnore]
         public Color Color => HexColor.ParseColor();
+        
+        public Language()
+        {
+            Aliases = new List<string>();
+            Extensions = new List<string>();
+        }
     }
 }
