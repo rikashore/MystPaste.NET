@@ -2,6 +2,7 @@
 using MystPaste.NET.Helpers;
 using MystPaste.NET.Helpers.Exceptions;
 using MystPaste.NET.Models;
+using Newtonsoft.Json;
 
 namespace MystPaste.NET.Clients
 {
@@ -18,7 +19,7 @@ namespace MystPaste.NET.Clients
         /// <returns>A <see cref="Paste"/> object.</returns>
         public Task<Paste> GetPasteAsync(string pasteId)
         {
-            return ApiRequester.Get<Paste>(ApiUrls.Paste(pasteId));
+            return ApiRequester.Get<Paste>(ApiUrls.GetPaste(pasteId));
         }
 
         /// <summary>
@@ -38,7 +39,21 @@ namespace MystPaste.NET.Clients
             if (auth is null)
                 throw new InvalidAuthException(nameof(auth));
 
-            return ApiRequester.Get<Paste>(ApiUrls.Paste(pasteId), auth);
+            return ApiRequester.Get<Paste>(ApiUrls.GetPaste(pasteId), auth);
+        }
+        
+        public Task PostPasteAsync(PasteForm pasteForm)
+        {
+            return ApiRequester.Post(ApiUrls.PostPaste(),JsonConvert.SerializeObject(pasteForm));
+        }
+
+        public Task DeletePostAsync(string pasteId, string auth = null)
+        {
+            auth ??= ApiRequester.Auth;
+            if (auth is null)
+                throw new InvalidAuthException(nameof(auth));
+
+            return ApiRequester.Delete(ApiUrls.DeletePost(pasteId), auth);
         }
     }
 }
