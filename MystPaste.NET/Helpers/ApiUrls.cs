@@ -51,7 +51,13 @@ namespace MystPaste.NET.Helpers
         public static Uri ExpirationTimestamp(long timestamp, string duration)
             => "time/expiresInToUnixTime?createdAt={0}&expiresIn={1}".FormatUri(timestamp, duration);
 
-        public static Uri Paste(string pasteId)
+        public static Uri GetPaste(string pasteId)
+            => "paste/{0}".FormatUri(pasteId);
+
+        public static Uri PostPaste()
+            => "paste".FormatUri();
+
+        public static Uri DeletePost(string pasteId)
             => "paste/{0}".FormatUri(pasteId);
     }
 }
