@@ -15,23 +15,7 @@ namespace MystPaste.NET.Clients
         public TimeClient(ApiRequester apiRequester) : base(apiRequester)
         { }
 
-        /// <summary>
-        /// Get expiration info about a paste.
-        /// </summary>
-        /// <param name="createdAt">a long representing the unix timestamp when the paste was created.</param>
-        /// <param name="duration">The duration, represented by an integer, for example 24, 11 etc.</param>
-        /// <param name="expiresIn">A <see cref="ExpiresIn"/> that specifies when the paste expires.</param>
-        /// <example>
-        /// <code>
-        /// var timestamp = await GetExpiresWhenTimestamp(1588441258, 24, ExpiresIn.Weeks);
-        /// </code>
-        /// </example>
-        /// <returns>A long representing the unix timestamp when the paste will expire.</returns>
-        public async Task<Timestamp> GetExpiresWhenTimestamp(long createdAt, int duration, ExpiresIn expiresIn)
-        {
-            return await GetExpiresWhenTimestamp(createdAt, new MystExpiresIn(duration, expiresIn));
-        }
-
+        
         /// <summary>
         /// Get expiration info about a paste.
         /// </summary>
@@ -45,26 +29,29 @@ namespace MystPaste.NET.Clients
         /// </example>
         /// <returns>A long representing the unix timestamp when the paste will expire.</returns>
         /// <exception cref="ArgumentException">Throws when <paramref name="durationType"/> is not a valid duration character.</exception>
-        public async Task<Timestamp> GetExpiresWhenTimestamp(long createdAt, int duration, char durationType)
+        public Task<Timestamp> GetExpiresWhenTimestamp(long createdAt, int duration, string durationType)
         {
             var expiresIn = durationType switch
             {
-                'd' => ExpiresIn.Days,
-                'h' => ExpiresIn.Hours,
-                'm' => ExpiresIn.Months,
-                'y' => ExpiresIn.Years,
-                'w' => ExpiresIn.Weeks,
+                "1h" => ExpiresIn.OneHour,
+                "2h" => ExpiresIn.TwoHours,
+                "10h" => ExpiresIn.TenHours,
+                "1d" => ExpiresIn.OneDay,
+                "2d" => ExpiresIn.TwoDays,
+                "1w" => ExpiresIn.OneWeek,
+                "1m" => ExpiresIn.OneMonth,
+                "1y" => ExpiresIn.OneYear,
                 _ => throw new ArgumentException("Invalid duration type character", nameof(durationType))
             };
 
-            return await GetExpiresWhenTimestamp(createdAt, duration, expiresIn);
+            return GetExpiresWhenTimestamp(createdAt, expiresIn);
         }
 
         /// <summary>
         /// Get expiration info about a paste.
         /// </summary>
         /// <param name="createdAt">a long representing the unix timestamp when the paste was created.</param>
-        /// <param name="expiresIn">a <see cref="IMystExpiresIn"/> that represents the expiry duration</param>
+        /// <param name="expiresIn">a <see cref="ExpiresIn"/> that represents the expiry duration</param>
         /// <example>
         /// <code>
         /// var timestamp = await GetExpiresWhenTimestamp(1588441258, new MystExpiresIn(24, ExpiresIn.Weeks));
@@ -72,29 +59,24 @@ namespace MystPaste.NET.Clients
         /// </example>
         /// <returns>A long representing the unix timestamp when the paste will expire.</returns>
         /// <exception cref="ArgumentException">Throws when <paramref name="expiresIn"/> does not have a valid <see cref="ExpiresIn"/>.</exception>
-        public async Task<Timestamp> GetExpiresWhenTimestamp(long createdAt, IMystExpiresIn expiresIn)
+        public Task<Timestamp> GetExpiresWhenTimestamp(long createdAt, ExpiresIn expiresIn)
         {
-            var duration = string.Empty;
-            
-            if (expiresIn is MystNeverExpiresIn)
-                duration = "never";
-            
-            else if (expiresIn is MystExpiresIn mystExpiresIn)
+            var durationString = expiresIn switch
             {
-                var durationChar = mystExpiresIn.ExpiresIn switch
-                {
-                    ExpiresIn.Days => 'd',
-                    ExpiresIn.Hours => 'h',
-                    ExpiresIn.Months => 'm',
-                    ExpiresIn.Years => 'y',
-                    ExpiresIn.Weeks => 'w',
-                    _ => throw new ArgumentException("Invalid ExpiresIn", nameof(expiresIn))
-                };
+                ExpiresIn.OneHour => "1h",
+                ExpiresIn.TwoHours => "2h",
+                ExpiresIn.TenHours => "10h",
+                ExpiresIn.OneDay => "1d",
+                ExpiresIn.TwoDays => "2d",
+                ExpiresIn.OneWeek => "1w",
+                ExpiresIn.OneMonth => "1m",
+                ExpiresIn.OneYear => "1y",
+                ExpiresIn.Never => "never",
+                _ => throw new ArgumentException("Invalid ExpiresIn", nameof(expiresIn))
+            };
+            
 
-                duration = $"{mystExpiresIn.Duration}{durationChar}";
-            }
-
-            return await ApiRequester.Get<Timestamp>(ApiUrls.ExpirationTimestamp(createdAt, duration));
+            return ApiRequester.Get<Timestamp>(ApiUrls.ExpirationTimestamp(createdAt, durationString));
         }
     }
 }
