@@ -12,12 +12,21 @@ namespace MystPaste.NET.Example
 
             var lang = await myst.Data.GetLanguageByNameAsync("javascript");
             
-            Console.WriteLine(lang.Name);
-
-            var res = await myst.Paste.GetPasteAsync("jejepxp3");
+            if (lang.Aliases is null)
+                Console.WriteLine("nah no aliases");
+            else
+                Console.WriteLine(string.Join(" ", lang.Aliases));
             
-            //Console.WriteLine(res.Edits[0].EditType);
-            Console.WriteLine(res.Title + " " + res.Title.GetType());
+            var lang2 = await myst.Data.GetLanguageByNameAsync("brainfuck");
+            
+            if (lang2.Aliases.Count == 0)
+                Console.WriteLine("nah no aliases");
+            else
+                Console.WriteLine(string.Join(" ", lang2.Aliases));
+
+            var paste = await myst.Paste.GetPasteAsync("jejepxp3");
+            
+            Console.WriteLine(paste.Title);
         }
     }
 }
