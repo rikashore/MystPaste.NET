@@ -23,9 +23,9 @@ namespace MystPaste.NET.Clients
         /// <returns>
         /// A boolean value representing the result. True if the user exists. False if the user doesn't exist
         /// </returns>
-        public async Task<bool> CheckIfUserExistsAsync(string username)
+        public Task<bool> CheckIfUserExistsAsync(string username)
         {
-            return await ApiRequester.Get(ApiUrls.UserExists(username));
+            return ApiRequester.Get(ApiUrls.UserExists(username));
         }
 
         /// <summary>
@@ -33,9 +33,9 @@ namespace MystPaste.NET.Clients
         /// </summary>
         /// <param name="username">The username of the user.</param>
         /// <returns>A <see cref="User"/> object.</returns>
-        public async Task<User> GetUserAsync(string username)
+        public Task<User> GetUserAsync(string username)
         {
-            return await ApiRequester.Get<User>(ApiUrls.User(username));
+            return ApiRequester.Get<User>(ApiUrls.User(username));
         }
 
         /// <summary>
@@ -43,16 +43,17 @@ namespace MystPaste.NET.Clients
         /// </summary>
         /// <param name="auth">
         /// An optional authentication token.
-        /// Is only optional when a token has not been passed to the <see cref="MystPasteClient"/>.</param>
+        /// Is only optional when a token has not been passed to the <see cref="MystPasteClient"/>.
+        /// </param>
         /// <returns>A <see cref="CurrentUser"/> object.</returns>
-        /// <exception cref="ArgumentNullException">Throws when an auth token has not been passed to the client or the method.</exception>
-        public async Task<CurrentUser> GetAuthenticatedUserAsync(string auth = null)
+        /// <exception cref="InvalidAuthException">Throws when an auth token has not been passed to the client or the method.</exception>
+        public Task<CurrentUser> GetAuthenticatedUserAsync(string auth = null)
         {
             auth ??= ApiRequester.Auth;
             if (auth is null)
                 throw new InvalidAuthException(nameof(auth));
 
-            return await ApiRequester.Get<CurrentUser>(ApiUrls.CurrentUser(), auth);
+            return ApiRequester.Get<CurrentUser>(ApiUrls.CurrentUser(), auth);
         }
 
         /// <summary>
@@ -64,13 +65,13 @@ namespace MystPaste.NET.Clients
         /// </param>
         /// <returns>A <see cref="List{T}"/> of strings which are the Ids of the pastes.</returns>
         /// <exception cref="ArgumentNullException">Throws when an auth token has not been passed to the client or the method.</exception>
-        public async Task<List<string>> GetAuthenticatedUserPastesAsync(string auth = null)
+        public Task<List<string>> GetAuthenticatedUserPastesAsync(string auth = null)
         {
             auth ??= ApiRequester.Auth;
             if (auth is null)
                 throw new InvalidAuthException(nameof(auth));
 
-            return await ApiRequester.Get<List<string>>(ApiUrls.CurrentUserPastes(), auth);
+            return ApiRequester.Get<List<string>>(ApiUrls.CurrentUserPastes(), auth);
         }
     }
 }
