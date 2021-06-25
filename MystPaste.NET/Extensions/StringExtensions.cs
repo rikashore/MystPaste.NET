@@ -13,28 +13,5 @@ namespace MystPaste.NET.Extensions
 
             return new Uri(string.Format(CultureInfo.InvariantCulture, pattern, args), UriKind.Relative);
         }
-        
-        public static Color ParseColor(this string hexadecimal)
-        {
-            hexadecimal = hexadecimal.TrimStart('#');
-            Color result;
-            if (hexadecimal.Length == 6)
-            {
-                result = Color.FromArgb(
-                    255,
-                    int.Parse(hexadecimal.Substring(0, 2), NumberStyles.HexNumber),
-                    int.Parse(hexadecimal.Substring(2, 2), NumberStyles.HexNumber),
-                    int.Parse(hexadecimal.Substring(4, 2), NumberStyles.HexNumber));
-            }
-            else
-            {
-                result = Color.FromArgb(
-                    int.Parse(hexadecimal.Substring(0, 2), NumberStyles.HexNumber),
-                    int.Parse(hexadecimal.Substring(2, 2), NumberStyles.HexNumber),
-                    int.Parse(hexadecimal.Substring(4, 2), NumberStyles.HexNumber),
-                    int.Parse(hexadecimal.Substring(6, 2), NumberStyles.HexNumber));
-            }
-            return result;
-        }
     }
 }
