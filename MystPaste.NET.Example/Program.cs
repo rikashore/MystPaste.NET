@@ -10,7 +10,7 @@ namespace MystPaste.NET.Example
         {
             var myst = new MystPasteClient();
 
-            var lang = await myst.Data.GetLanguageByNameAsync("javascript");
+            var lang = await myst.Data.GetLanguageByNameAsync("PGP");
             
             if (lang.Aliases is null)
                 Console.WriteLine("nah no aliases");

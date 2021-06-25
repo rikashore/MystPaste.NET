@@ -41,6 +41,7 @@ namespace MystPaste.NET.Clients
                 "1w" => ExpiresIn.OneWeek,
                 "1m" => ExpiresIn.OneMonth,
                 "1y" => ExpiresIn.OneYear,
+                "never" => ExpiresIn.Never,
                 _ => throw new ArgumentException("Invalid duration type character", nameof(durationType))
             };
 
