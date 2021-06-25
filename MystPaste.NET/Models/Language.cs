@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
-using MystPaste.NET.Extensions;
+using System.ComponentModel;
 using Newtonsoft.Json;
 
 namespace MystPaste.NET.Models
@@ -32,7 +31,12 @@ namespace MystPaste.NET.Models
         /// <summary>
         /// The color used to represent the language. 
         /// </summary>
-        [JsonProperty("color")]
+        /// <remarks>
+        /// This is an optional property, meaning that if a language does not have a color,
+        /// a default value of #ffffff is assigned. 
+        /// </remarks>
+        [JsonProperty("color", DefaultValueHandling = DefaultValueHandling.Populate)]
+        [DefaultValue("#ffffff")]
         public string HexColor { get; set; }
 
         /// <summary>
@@ -47,12 +51,7 @@ namespace MystPaste.NET.Models
         [JsonProperty("mimes")]
         public List<string> Mimes { get; set; }
 
-        /// <summary>
-        /// A <see cref="System.Drawing.Color"/> formed from HexColor.
-        /// </summary>
-        [JsonIgnore]
-        public Color Color => HexColor.ParseColor();
-        
+        // We do this because for some reason if aliases and/or extensions dont exist for a language they just aren't sent.
         public Language()
         {
             Aliases = new List<string>();
