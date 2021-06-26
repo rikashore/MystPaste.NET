@@ -74,13 +74,13 @@ namespace MystPaste.NET
         /// <param name="auth"></param>
         /// <returns>A <see cref="Paste"/> object representing the edits.</returns>
         /// <exception cref="InvalidAuthException">Throws when an auth token has not been passed to the client or the method.</exception>
-        public Task EditPostAsync<TPaste>(string pasteId, PasteEditBuilder editBuilder, string auth = null)
+        public Task<Paste> EditPostAsync(string pasteId, PasteEditBuilder editBuilder, string auth = null)
         {
             auth ??= ApiRequester.Auth;
             if (auth is null)
                 throw new InvalidAuthException(nameof(auth));
 
-            return ApiRequester.Patch<TPaste>(ApiUrls.EditPost(pasteId), JsonConvert.SerializeObject(editBuilder), auth);
+            return ApiRequester.Patch<Paste>(ApiUrls.EditPost(pasteId), JsonConvert.SerializeObject(editBuilder), auth);
         }
     }
 }
