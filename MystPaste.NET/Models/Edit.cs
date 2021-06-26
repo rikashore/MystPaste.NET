@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace MystPaste.NET.Models
+namespace MystPaste.NET
 {
     public class Edit
     {

@@ -1,5 +1,8 @@
 ﻿namespace MystPaste.NET
 {
+    /// <summary>
+    /// An enum to represent different values for expiration of a <see cref="Paste"/>.
+    /// </summary>
     public enum ExpiresIn
     {
         Never,       // string form -> "never"

@@ -1,5 +1,8 @@
 ﻿namespace MystPaste.NET
 {
+    /// <summary>
+    /// An enum representing the type of the edit.
+    /// </summary>
     public enum EditType
     {
         /// <summary>The paste's title was edited.</summary>

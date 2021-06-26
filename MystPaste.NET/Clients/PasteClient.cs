@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using MystPaste.NET.Models;
 using Newtonsoft.Json;
 
 namespace MystPaste.NET
@@ -40,11 +39,24 @@ namespace MystPaste.NET
             return ApiRequester.Get<Paste>(ApiUrls.GetPaste(pasteId), auth);
         }
         
+        /// <summary>
+        /// Create a new post.
+        /// Requires auth (given through the paste form builder or the PasteForm)
+        /// if its to be added to your profile.
+        /// </summary>
+        /// <param name="pasteForm">The <see cref="PasteForm"/> to be posted. See <see cref="PasteFormBuilder"/> for a builder.</param>
         public Task PostPasteAsync(PasteForm pasteForm)
         {
             return ApiRequester.Post(ApiUrls.PostPaste(),JsonConvert.SerializeObject(pasteForm));
         }
 
+        /// <summary>
+        /// Delete a post, requires auth.
+        /// </summary>
+        /// <param name="pasteId">The id of the post to delete.</param>
+        /// <param name="auth"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidAuthException">Throws when an auth token has not been passed to the client or the method.</exception>
         public Task DeletePostAsync(string pasteId, string auth = null)
         {
             auth ??= ApiRequester.Auth;
@@ -54,13 +66,21 @@ namespace MystPaste.NET
             return ApiRequester.Delete(ApiUrls.DeletePost(pasteId), auth);
         }
 
-        public Task EditPostAsync(string pasteId, PasteEditBuilder editBuilder, string auth = null)
+        /// <summary>
+        /// Edit a post. you can only edit posts on your account, so auth is required.
+        /// </summary>
+        /// <param name="pasteId">The id of the paste to edit.</param>
+        /// <param name="editBuilder">A <see cref="PasteEditBuilder"/> for the edit.</param>
+        /// <param name="auth"></param>
+        /// <returns>A <see cref="Paste"/> object representing the edits.</returns>
+        /// <exception cref="InvalidAuthException">Throws when an auth token has not been passed to the client or the method.</exception>
+        public Task EditPostAsync<TPaste>(string pasteId, PasteEditBuilder editBuilder, string auth = null)
         {
             auth ??= ApiRequester.Auth;
             if (auth is null)
                 throw new InvalidAuthException(nameof(auth));
 
-            return ApiRequester.Patch<Paste>(ApiUrls.EditPost(pasteId), JsonConvert.SerializeObject(editBuilder), auth);
+            return ApiRequester.Patch<TPaste>(ApiUrls.EditPost(pasteId), JsonConvert.SerializeObject(editBuilder), auth);
         }
     }
 }
