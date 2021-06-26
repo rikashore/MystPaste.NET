@@ -2,6 +2,14 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <PackageId>MystPaste.NET</PackageId>
+        <Version>1.0.0</Version>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Authors>Aarav Navani</Authors>
+        <Description>
+            This library wraps the PasteMyst API.
+            More info can be found at - https://github.com/shift-eleven/MystPaste.NET
+        </Description>
     </PropertyGroup>
 
     <ItemGroup>
