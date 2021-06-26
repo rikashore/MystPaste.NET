@@ -13,6 +13,6 @@
         TwoDays,     // string form -> "2d"
         OneWeek,     // string form -> "1w"
         OneMonth,    // string form -> "1m"
-        OneYear    // string form -> "1y"
+        OneYear      // string form -> "1y"
     }
 }

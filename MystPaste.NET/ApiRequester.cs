@@ -57,6 +57,9 @@ namespace MystPaste.NET
             return res.IsSuccessStatusCode;
         }
 
+        /// <summary>
+        /// Makes a POST request to the specified url.
+        /// </summary>
         public async Task Post(Uri uri, string content, string auth = null)
         {
             using var requestMessage = new HttpRequestMessage(HttpMethod.Post, uri);
@@ -78,6 +81,9 @@ namespace MystPaste.NET
             }
         }
 
+        /// <summary>
+        /// Makes a DELETE request to the specified url.
+        /// </summary>
         public async Task Delete(Uri uri, string auth)
         {
             using var requestMessage = new HttpRequestMessage(HttpMethod.Delete, uri);
@@ -95,6 +101,9 @@ namespace MystPaste.NET
             }
         }
 
+        /// <summary>
+        /// Make a PATCH request to the specified url.
+        /// </summary>
         public async Task<T> Patch<T>(Uri uri, string content, string auth)
         {
             using var requestMessage = new HttpRequestMessage(HttpMethod.Patch, uri);

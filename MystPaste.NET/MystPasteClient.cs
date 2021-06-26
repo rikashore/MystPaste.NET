@@ -36,6 +36,9 @@
         /// </summary>
         public TimeClient Time { get; }
         
+        /// <summary>
+        /// The <see cref="PasteClient"/> to access pastes and paste related info.
+        /// </summary>
         public PasteClient Paste { get; }
     }
 }
