@@ -8,7 +8,7 @@ MystPaste.NET is a wrapper around [PasteMyst's API](https://paste.myst.rs/api-do
 Install the package via nuget.
 
 ```bash
-dotnet add package MystPaste.NET --version 1.0.0
+dotnet add package MystPaste.NET
 ```
 
 
