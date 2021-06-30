@@ -60,7 +60,7 @@ namespace MystPaste.NET
         /// <summary>
         /// Makes a POST request to the specified url.
         /// </summary>
-        public async Task Post(Uri uri, string content, string auth = null)
+        public async Task<T> Post<T>(Uri uri, string content, string auth = null)
         {
             using var requestMessage = new HttpRequestMessage(HttpMethod.Post, uri);
 
@@ -79,6 +79,8 @@ namespace MystPaste.NET
                     ? "The server returned an exception with unknown reasons."
                     : $"The server returned an exception: {err.ErrorMessage}");
             }
+
+            return s.DeserializeTo<T>();
         }
 
         /// <summary>

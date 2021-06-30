@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace MystPaste.NET
@@ -97,6 +98,9 @@ namespace MystPaste.NET
         /// </remarks>
         [JsonProperty("edits")]
         public List<Edit> Edits { get; set; }
+
+        [JsonIgnore] 
+        public string Url => $"https://paste.myst.rs/{Id}";
 
         public PasteEditBuilder CreateEditForm()
             => new PasteEditBuilder(this);

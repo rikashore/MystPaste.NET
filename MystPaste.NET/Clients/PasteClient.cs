@@ -45,9 +45,9 @@ namespace MystPaste.NET
         /// if its to be added to your profile.
         /// </summary>
         /// <param name="pasteForm">The <see cref="PasteForm"/> to be posted. See <see cref="PasteFormBuilder"/> for a builder.</param>
-        public Task PostPasteAsync(PasteForm pasteForm)
+        public Task<Paste> PostPasteAsync(PasteForm pasteForm)
         {
-            return ApiRequester.Post(ApiUrls.PostPaste(),JsonConvert.SerializeObject(pasteForm));
+            return ApiRequester.Post<Paste>(ApiUrls.PostPaste(),JsonConvert.SerializeObject(pasteForm));
         }
 
         /// <summary>

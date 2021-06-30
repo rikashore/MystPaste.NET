@@ -1,29 +1,28 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
-    <ItemGroup>
-        <None Include="Assets\mystpastenet.png" />
-        <None Include="bin\Release\Assets\mystpastenet.png" />
-        <None Include="bin\Release\Assets\mystpastenet.svg" />
-    </ItemGroup>
     
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <PackageId>MystPaste.NET</PackageId>
-        <Version>1.0.4</Version>
+        <Version>1.0.6</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Aarav Navani</Authors>
-        <Description>This library wraps the PasteMyst API. More info can be found at - https://github.com/shift-eleven/MystPaste.NET
-        </Description>
+        <Copyright>Copyright @ 2021</Copyright>
+        <Description>This library wraps the PasteMyst API.</Description>
+        
+        <PackageProjectUrl>https://github.com/shift-eleven/MystPaste.NET</PackageProjectUrl>
+        <PackageLicenseUrl>https://github.com/shift-eleven/MystPaste.NET/blob/main/LICENSE</PackageLicenseUrl>
+        
+        <RepositoryUrl>https://github.com/shift-eleven/MystPaste.NET</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
         <PackageIcon>mystpastenet.png</PackageIcon>
     </PropertyGroup>
-
-
-    <ItemGroup>
-        <None Include="Assets\mystpastenet.png" Pack="true" PackagePath="\" />
-    </ItemGroup>
     
     <ItemGroup>
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <None Include="Assets\mystpastenet.png" Pack="true" PackagePath="" />
     </ItemGroup>
 
 </Project>
