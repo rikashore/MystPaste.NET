@@ -9,6 +9,10 @@ namespace MystPaste.NET
     /// </summary>
     public class TimeClient : ApiClient
     {
+        /// <summary>
+        /// Represents a client to get information
+        /// about expiration dates for pastes
+        /// </summary>
         public TimeClient(ApiRequester apiRequester) : base(apiRequester)
         { }
 

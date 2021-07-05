@@ -52,6 +52,9 @@ namespace MystPaste.NET
         public List<string> Mimes { get; set; }
 
         // We do this because for some reason if aliases and/or extensions dont exist for a language they just aren't sent.
+        /// <summary>
+        /// A language model.
+        /// </summary>
         public Language()
         {
             Aliases = new List<string>();

@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
     
     <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <TargetFramework>net5.0</TargetFramework>
         <PackageId>MystPaste.NET</PackageId>
-        <Version>1.0.6</Version>
+        <Version>1.0.7</Version>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Aarav Navani</Authors>
         <Copyright>Copyright @ 2021</Copyright>

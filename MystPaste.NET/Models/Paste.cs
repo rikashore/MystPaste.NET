@@ -39,7 +39,7 @@ namespace MystPaste.NET
         
         /// <summary>
         /// A string representing when the paste expires.
-        /// See <see cref="MystPaste.NET.Helpers.Expiry.ExpiresIn"/> for possible values.
+        /// See <see cref="ExpiresIn"/> for possible values.
         /// </summary>
         [JsonProperty("expiresIn")]
         public string ExpiresIn { get; set; }
@@ -99,9 +99,15 @@ namespace MystPaste.NET
         [JsonProperty("edits")]
         public List<Edit> Edits { get; set; }
 
+        /// <summary>
+        /// The url for a paste.
+        /// </summary>
         [JsonIgnore] 
         public string Url => $"https://paste.myst.rs/{Id}";
 
+        /// <summary>
+        /// Create a <see cref="PasteEditBuilder"/> for editing a paste.
+        /// </summary>
         public PasteEditBuilder CreateEditForm()
             => new PasteEditBuilder(this);
     }

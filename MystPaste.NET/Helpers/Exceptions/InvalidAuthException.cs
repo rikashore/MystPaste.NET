@@ -7,13 +7,18 @@ namespace MystPaste.NET
     /// </summary>
     public class InvalidAuthException : Exception
     {
-        public InvalidAuthException(string paramName)
+        /// <summary>
+        /// An exception thrown when an authorization token has not been passed
+        /// </summary>
+        public InvalidAuthException(string paramName) 
+            : base("An authorization token needs to be passed in the constructor of the MystPasteClient or to the method")
         {
-            Message = "An authorization token needs to be passed in the constructor of the MystPasteClient or to the method";
             ParamName = paramName;
         }
-
-        public override string Message { get; }
+        
+        /// <summary>
+        /// The auth param name
+        /// </summary>
         public string ParamName { get; }
     }
 }

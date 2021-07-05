@@ -5,10 +5,14 @@ namespace MystPaste.NET
 {
     /// <summary>
     /// Represents the client for getting information
-    /// about programming languages
+    /// about programming languages.
     /// </summary>
     public class DataClient : ApiClient
     {
+        /// <summary>
+        /// Represents the client for getting information
+        /// about programming languages.
+        /// </summary>
         public DataClient(ApiRequester apiRequester) : base(apiRequester)
         { }
 
@@ -21,10 +25,10 @@ namespace MystPaste.NET
         /// <exception cref="System.Net.Http.HttpRequestException">Throws when the resource requested is not found.</exception>
         /// <param name="languageName">The name of the language to get.</param>
         /// <returns>A <see cref="Language"/> object.</returns>
-        public async Task<Language> GetLanguageByNameAsync(string languageName)
+        public Task<Language> GetLanguageByNameAsync(string languageName)
         {
             var encodedName = WebUtility.UrlEncode(languageName);
-            return await ApiRequester.Get<Language>(ApiUrls.LanguageByName(encodedName));
+            return ApiRequester.Get<Language>(ApiUrls.LanguageByName(encodedName));
         }
 
         /// <summary>
@@ -36,10 +40,10 @@ namespace MystPaste.NET
         /// <exception cref="System.Net.Http.HttpRequestException">Throws when the resource requested is not found.</exception>
         /// <param name="extension">The extension of the language to get.</param>
         /// <returns>A <see cref="Language"/> object.</returns>
-        public async Task<Language> GetLanguageByExtensionAsync(string extension)
+        public Task<Language> GetLanguageByExtensionAsync(string extension)
         {
             var encodedExtension = WebUtility.UrlEncode(extension);
-            return await ApiRequester.Get<Language>(ApiUrls.LanguageByExtension(encodedExtension));
+            return ApiRequester.Get<Language>(ApiUrls.LanguageByExtension(encodedExtension));
         }
     }
 }

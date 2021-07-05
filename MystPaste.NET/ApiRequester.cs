@@ -12,6 +12,10 @@ namespace MystPaste.NET
         private readonly HttpClient _httpClient;
         private readonly Uri _baseUri = new Uri("https://paste.myst.rs/api/v2/");
 
+        /// <summary>
+        /// The requester to call the API.
+        /// </summary>
+        /// <param name="auth">Authorization token to be used.</param>
         public ApiRequester(string auth)
         {
             _httpClient = new HttpClient
@@ -22,6 +26,10 @@ namespace MystPaste.NET
             Auth = auth;
         }
         
+        /// <summary>
+        /// The authorization token to be used for
+        /// authorized methods.
+        /// </summary>
         public string Auth { get; }
 
         /// <summary>

@@ -9,6 +9,9 @@ namespace MystPaste.NET
     /// </summary>
     public class UserClient : ApiClient
     {
+        /// <summary>
+        /// Represents a client to get information about users.
+        /// </summary>
         public UserClient(ApiRequester apiRequester) : base(apiRequester)
         { }
 

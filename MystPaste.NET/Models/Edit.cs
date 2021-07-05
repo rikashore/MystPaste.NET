@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 
 namespace MystPaste.NET
 {
+    /// <summary>
+    /// Represents an Edit model.
+    /// </summary>
     public class Edit
     {
         

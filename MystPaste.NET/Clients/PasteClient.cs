@@ -3,8 +3,14 @@ using Newtonsoft.Json;
 
 namespace MystPaste.NET
 {
+    /// <summary>
+    /// Represents a client for getting paste related data.
+    /// </summary>
     public class PasteClient : ApiClient
     {
+        /// <summary>
+        /// Represents a client for getting paste related data.
+        /// </summary>
         public PasteClient(ApiRequester apiRequester) : base(apiRequester)
         { }
         

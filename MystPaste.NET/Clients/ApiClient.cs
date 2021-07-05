@@ -7,6 +7,9 @@ namespace MystPaste.NET
     /// </summary>
     public abstract class ApiClient
     {
+        /// <summary>
+        /// Represents a base abstract class which all clients inherit.
+        /// </summary>
         protected ApiClient(ApiRequester apiRequester)
         {
             if (apiRequester is null)

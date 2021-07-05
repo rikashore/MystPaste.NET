@@ -56,6 +56,9 @@ namespace MystPaste.NET
             set => WithTags(value);
         }
 
+        /// <summary>
+        /// A paste form builder.
+        /// </summary>
         public PasteFormBuilder()
         {
             _pasties = new List<Pasty>();
@@ -215,6 +218,9 @@ namespace MystPaste.NET
                 throw new ArgumentException("You need to have at least one pasty object");
         }
 
+        /// <summary>
+        /// An implicit conversion to a <see cref="PasteForm"/>
+        /// </summary>
         public static implicit operator PasteForm(PasteFormBuilder p) => p.Build();
     }
 }
