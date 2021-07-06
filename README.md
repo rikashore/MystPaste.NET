@@ -11,6 +11,7 @@ Install the package via nuget.
 dotnet add package MystPaste.NET
 ```
 
+Keeping your package updated is pretty handy. To see the latest version, check out the [NuGet](https://www.nuget.org/packages/MystPaste.NET) listing.
 
 ## Usage/Examples
 
