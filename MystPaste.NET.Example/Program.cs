@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace MystPaste.NET.Example
 {
@@ -8,12 +9,30 @@ namespace MystPaste.NET.Example
     {
         static async Task Main(string[] args)
         {
+
+            var logger = LoggerFactory
+                .Create(x => x.AddConsole())
+                .CreateLogger<Program>();
+
             // Instantiating a new MystPasteClient. We use this to make requests and get information.
             // An authorization token can be passed to constructor for making requests that require authorization.
             // Alternatively you can pass them to the methods that require auth.
-            var myst = new MystPasteClient("<TOKEN HERE>");
+            var myst = new MystPasteClient(new MystPasteConfiguration
+            {
+                AuthToken = "<AUTH TOKEN>",
+                Logger = logger
+            });
 
-            // The data client allows us to get info about programming langauges
+            var myst2 = new MystPasteClient(x =>
+            {
+                x.AuthToken = "<AUTH TOKEN>";
+                x.Logger = logger;
+            });
+            
+            // An optional logger for logging can also be used.
+            // var myst2 = new MystPasteClient("<AUTH TOKEN>", logger);
+            
+            // The data client allows us to get info about programming languages
             
             // Here we are getting a language by name.
             var lang = await myst.Data.GetLanguageByNameAsync("javascript");
@@ -27,17 +46,17 @@ namespace MystPaste.NET.Example
             var lang2 = await myst.Data.GetLanguageByExtensionAsync("cs");
             
             Console.WriteLine(lang2.Name);
-
+            
             // The paste client allows us to create, get, edit and delete posts.
             
             // Allows us to get public pastes.
             var paste = await myst.Paste.GetPasteAsync("<PASTE ID>");
-
+            
             Console.WriteLine(paste.Title);
             
             // This method allows us to get private posts with auth.
             var paste2 = await myst.Paste.GetAuthenticatedPasteAsync("<PASTE ID>", "<AUTH TOKEN HERE>");
-
+            
             // This builder allows us to create new pastes. All pastes require at least one pasty object.
             var pfb = new PasteFormBuilder()
                 .WithTitle("Nice")
@@ -48,22 +67,22 @@ namespace MystPaste.NET.Example
                     Language = "C#"
                 })
                 .Build();
-
+            
             // post the paste onto PasteMyst.
             await myst.Paste.PostPasteAsync(pfb);
-
+            
             // Deletes a post.
             // You can only delete posts on your account, so auth is required.
             await myst.Paste.DeletePostAsync("<PASTE ID>", "<AUTH TOKEN>");
-
+            
             // Get a paste and turn it into an editable form.
             var editablePaste = await myst.Paste.GetPasteAsync("<PASTE ID>");
             var form = editablePaste.CreateEditForm();
-
+            
             // Edit the values.
             form.Title += "Hello";
             form.Tags = new List<string> {"test", "c#"};
-
+            
             // Finally make the changes.
             await myst.Paste.EditPostAsync("<PASTE ID>", form, "<AUTH TOKEN>");
             
@@ -79,7 +98,7 @@ namespace MystPaste.NET.Example
             
             // Check if a user exists. returns a boolean
             var userExists = await myst.User.CheckIfUserExistsAsync("username");
-
+            
             // Get a user by their username.
             var user = await myst.User.GetUserAsync("username");
             
