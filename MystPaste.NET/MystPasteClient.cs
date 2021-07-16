@@ -37,6 +37,16 @@ namespace MystPaste.NET
         }
 
         /// <summary>
+        /// Represents a client to access the API.
+        /// </summary>
+        public MystPasteClient() : this(new MystPasteConfiguration
+        {
+            AuthToken = null,
+            Logger = null
+        })
+        { }
+
+        /// <summary>
         /// The <see cref="DataClient"/> to access language related data.
         /// </summary>
         public DataClient Data { get; }

@@ -23,11 +23,7 @@ namespace MystPaste.NET.Example
                 Logger = logger
             });
 
-            var myst2 = new MystPasteClient(x =>
-            {
-                x.AuthToken = "<AUTH TOKEN>";
-                x.Logger = logger;
-            });
+            var myst2 = new MystPasteClient();
             
             // An optional logger for logging can also be used.
             // var myst2 = new MystPasteClient("<AUTH TOKEN>", logger);
@@ -36,7 +32,7 @@ namespace MystPaste.NET.Example
             
             // Here we are getting a language by name.
             var lang = await myst.Data.GetLanguageByNameAsync("javascript");
-            
+
             if (lang.Aliases is null)
                 Console.WriteLine("nah no aliases");
             else
