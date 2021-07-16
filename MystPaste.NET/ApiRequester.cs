@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Polly;
+using Polly.Retry;
 
 namespace MystPaste.NET
 {
@@ -11,17 +15,28 @@ namespace MystPaste.NET
     {
         private readonly HttpClient _httpClient;
         private readonly Uri _baseUri = new Uri("https://paste.myst.rs/api/v2/");
+        private readonly ILogger _logger;
+
+        private readonly AsyncRetryPolicy<HttpResponseMessage> _retryPolicy;
 
         /// <summary>
         /// The requester to call the API.
         /// </summary>
         /// <param name="auth">Authorization token to be used.</param>
-        public ApiRequester(string auth)
+        /// <param name="logger">The logger to use for logging</param>
+        public ApiRequester(string auth, ILogger logger)
         {
             _httpClient = new HttpClient
             {
                 BaseAddress = _baseUri
             };
+            _logger = logger;
+            _retryPolicy = Policy
+                .HandleResult<HttpResponseMessage>(r => r.StatusCode == HttpStatusCode.TooManyRequests)
+                .WaitAndRetryAsync(2, _ => TimeSpan.FromMinutes(2), (_, _) =>
+                {
+                    logger.LogInformation("Ratelimit hit, retrying");
+                });
 
             Auth = auth;
         }
@@ -41,19 +56,26 @@ namespace MystPaste.NET
             
             if (auth is not null)
                 requestMessage.Headers.TryAddWithoutValidation("Authorization", auth);
-            
-            var res = await _httpClient.SendAsync(requestMessage);
-            var s = await res.Content.ReadAsStreamAsync();
 
-            if (!res.IsSuccessStatusCode)
+            var msg = await _retryPolicy.ExecuteAsync(async () =>
             {
-                var err = s.DeserializeTo<Response>();
-                throw new Exception(err is null
+                var res = await _httpClient.SendAsync(requestMessage);
+
+                _logger?.LogInformation("Making GET request to {uri}", uri);
+
+                if (res.IsSuccessStatusCode)
+                    return res;
+
+                var stream = await res.Content.ReadAsStreamAsync();
+
+                var error = stream.DeserializeTo<Response>();
+                throw new Exception(error is null
                     ? "The server returned an exception with unknown reasons."
-                    : $"The server returned an exception: {err.ErrorMessage}");
-            }
-            
-            return s.DeserializeTo<T>();
+                    : $"The server returned an exception: {error.ErrorMessage}");
+            });
+
+            var contentStream = await msg.Content.ReadAsStreamAsync();
+            return contentStream.DeserializeTo<T>();
         }
 
         /// <summary>
@@ -77,18 +99,26 @@ namespace MystPaste.NET
 
             requestMessage.Content = new StringContent(content);
 
-            var res = await _httpClient.SendAsync(requestMessage);
-            var s = await res.Content.ReadAsStreamAsync();
-
-            if (!res.IsSuccessStatusCode)
+            var msg = await _retryPolicy.ExecuteAsync(async () =>
             {
-                var err = s.DeserializeTo<Response>();
-                throw new Exception(err is null
-                    ? "The server returned an exception with unknown reasons."
-                    : $"The server returned an exception: {err.ErrorMessage}");
-            }
+                var responseMessage = await _httpClient.SendAsync(requestMessage);
+                
+                _logger?.LogInformation("Making POST request to {uri}", uri);
+                
+                var stream = await responseMessage.Content.ReadAsStreamAsync();
 
-            return s.DeserializeTo<T>();
+                if (responseMessage.IsSuccessStatusCode) 
+                    return responseMessage;
+                
+                var error = stream.DeserializeTo<Response>();
+                throw new Exception(error is null
+                    ? "The server returned an exception with unknown reasons."
+                    : $"The server returned an exception: {error.ErrorMessage}");
+
+            });
+
+            var contentStream = await msg.Content.ReadAsStreamAsync();
+            return contentStream.DeserializeTo<T>();
         }
 
         /// <summary>
@@ -98,17 +128,24 @@ namespace MystPaste.NET
         {
             using var requestMessage = new HttpRequestMessage(HttpMethod.Delete, uri);
             requestMessage.Headers.TryAddWithoutValidation("Authorization", auth);
-            
-            var res = await _httpClient.SendAsync(requestMessage);
-            var s = await res.Content.ReadAsStreamAsync();
 
-            if (!res.IsSuccessStatusCode)
+                
+            await _retryPolicy.ExecuteAsync(async () =>
             {
-                var err = s.DeserializeTo<Response>();
-                throw new Exception(err is null
+                var responseMessage = await _httpClient.SendAsync(requestMessage);
+                
+                _logger?.LogInformation("Making DELETE request to {uri}", uri);
+                
+                var stream = await responseMessage.Content.ReadAsStreamAsync();
+
+                if (responseMessage.IsSuccessStatusCode) 
+                    return responseMessage;
+                
+                var error = stream.DeserializeTo<Response>();
+                throw new Exception(error is null
                     ? "The server returned an exception with unknown reasons."
-                    : $"The server returned an exception: {err.ErrorMessage}");
-            }
+                    : $"The server returned an exception: {error.ErrorMessage}");
+            });
         }
 
         /// <summary>
@@ -121,18 +158,26 @@ namespace MystPaste.NET
 
             requestMessage.Content = new StringContent(content);
 
-            var res = await _httpClient.SendAsync(requestMessage);
-            var s = await res.Content.ReadAsStreamAsync();
-
-            if (!res.IsSuccessStatusCode)
+            var msg = await _retryPolicy.ExecuteAsync(async () =>
             {
-                var err = s.DeserializeTo<Response>();
-                throw new Exception(err is null
-                    ? "The server returned an exception with unknown reasons."
-                    : $"The server returned an exception: {err.ErrorMessage}");
-            }
+                var responseMessage = await _httpClient.SendAsync(requestMessage);
+                
+                _logger?.LogInformation("Making PATCH request to {uri}", uri);
+                
+                var stream = await responseMessage.Content.ReadAsStreamAsync();
 
-            return s.DeserializeTo<T>();
+                if (responseMessage.IsSuccessStatusCode) 
+                    return responseMessage;
+                
+                var error = stream.DeserializeTo<Response>();
+                throw new Exception(error is null
+                    ? "The server returned an exception with unknown reasons."
+                    : $"The server returned an exception: {error.ErrorMessage}");
+
+            });
+
+            var contentStream = await msg.Content.ReadAsStreamAsync();
+            return contentStream.DeserializeTo<T>();
         }
     }
 }
