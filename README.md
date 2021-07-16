@@ -20,7 +20,7 @@ Examples can be found in the [Example](https://github.com/shift-eleven/MystPaste
   
 ## Documentation
 
-Currently there is no documentation website besides the bundled XML docstrings.
+Alongside the bundled XML Docs, Check out the Wiki for documentation.
 
 If you require any further assistance, feel free to open an issue or join the [discord guild](https://discord.gg/uXhtH9ZbxN).
 
