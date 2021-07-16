@@ -1,4 +1,6 @@
-﻿namespace MystPaste.NET
+﻿using System;
+
+namespace MystPaste.NET
 {
     /// <summary>
     /// Represents the main client to access the API.
@@ -6,20 +8,33 @@
     public class MystPasteClient
     {
         /// <summary>
-        /// Represents an authorised MystPasteClient.
+        /// Represents a client to access the API.
         /// </summary>
-        /// <param name="auth">The token of the user to authenticate with.</param>
-        public MystPasteClient(string auth)
+        /// <param name="configuration">The <see cref="MystPasteConfiguration"/> to use for this client.</param>
+        public MystPasteClient(MystPasteConfiguration configuration)
         {
-            var apiRequester = new ApiRequester(auth);
+            var apiRequester = new ApiRequester(configuration.AuthToken, configuration.Logger);
             Data = new DataClient(apiRequester);
             User = new UserClient(apiRequester);
             Time = new TimeClient(apiRequester);
             Paste = new PasteClient(apiRequester);
         }
-        
-        public MystPasteClient() : this(null)
-        { }
+
+        /// <summary>
+        /// Represents a client to access the API.
+        /// </summary>
+        /// <param name="action">The <see cref="MystPasteConfiguration"/> action to use for this client.</param>
+        public MystPasteClient(Action<MystPasteConfiguration> action)
+        {
+            var properties = new MystPasteConfiguration();
+            action?.Invoke(properties);
+            
+            var apiRequester = new ApiRequester(properties.AuthToken, properties.Logger);
+            Data = new DataClient(apiRequester);
+            User = new UserClient(apiRequester);
+            Time = new TimeClient(apiRequester);
+            Paste = new PasteClient(apiRequester);
+        }
 
         /// <summary>
         /// The <see cref="DataClient"/> to access language related data.
