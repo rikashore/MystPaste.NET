@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MystPaste.NET
 {
@@ -42,7 +43,8 @@ namespace MystPaste.NET
         /// See <see cref="ExpiresIn"/> for possible values.
         /// </summary>
         [JsonProperty("expiresIn")]
-        public string ExpiresIn { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ExpiresIn ExpiresIn { get; set; }
         
         /// <summary>
         /// A unix timestamp when this paste will delete.
@@ -73,7 +75,7 @@ namespace MystPaste.NET
         /// Whether the paste is encrypted.
         /// </summary>
         [JsonProperty("encrypted")]
-        public bool Encrypted { get; set; }
+        public bool IsEncrypted { get; set; }
         
         /// <summary>
         /// A list of tags for the paste.

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace MystPaste.NET
 {
@@ -18,7 +19,8 @@ namespace MystPaste.NET
         /// When the paste expires. Defaults to never.
         /// </summary>
         [JsonProperty("expiresIn")]
-        public string ExpiresIn { get; set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ExpiresIn ExpiresIn { get; set; }
         
         /// <summary>
         /// Whether the paste is private. Requires auth.
