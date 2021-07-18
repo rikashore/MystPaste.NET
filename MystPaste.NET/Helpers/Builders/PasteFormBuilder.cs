@@ -25,8 +25,8 @@ namespace MystPaste.NET
         /// <summary>
         /// The string representing the time it expires in.
         /// </summary>
-        public string ExpiresInString { get; set; }
-        
+        public ExpiresIn ExpiresIn { get; set; }
+
         /// <summary>
         /// Whether the post is private. Requires auth.
         /// </summary>
@@ -84,19 +84,7 @@ namespace MystPaste.NET
         /// <exception cref="ArgumentException">Throws when an invalid <paramref name="expiresIn"/> is passed.</exception>
         public PasteFormBuilder WithExpiresIn(ExpiresIn expiresIn)
         {
-            ExpiresInString = expiresIn switch
-            {
-                ExpiresIn.OneHour => "1h",
-                ExpiresIn.TwoHours => "2h",
-                ExpiresIn.TenHours => "10h",
-                ExpiresIn.OneDay => "1d",
-                ExpiresIn.TwoDays => "2d",
-                ExpiresIn.OneWeek => "1w",
-                ExpiresIn.OneMonth => "1m",
-                ExpiresIn.OneYear => "1y",
-                ExpiresIn.Never => "never",
-                _ => throw new ArgumentException("Invalid ExpiresIn", nameof(expiresIn))
-            };
+            ExpiresIn = expiresIn; 
 
             return this;
         }
@@ -104,22 +92,20 @@ namespace MystPaste.NET
         /// <summary>
         /// Set if the post is private. Requires auth.
         /// </summary>
-        /// <param name="isPrivate">A boolean representing if the post is private.</param>
         /// <returns>This object to allow for method chaining.</returns>
-        public PasteFormBuilder WithIsPrivate(bool isPrivate)
+        public PasteFormBuilder Private()
         {
-            IsPrivate = isPrivate;
+            IsPrivate = true;
             return this;
         }
 
         /// <summary>
         /// Set if the post is public. Requires auth.
         /// </summary>
-        /// <param name="isPublic">A boolean representing if the post is public.</param>
         /// <returns>This object to allow for method chaining.</returns>
-        public PasteFormBuilder WithIsPublic(bool isPublic)
+        public PasteFormBuilder Public()
         {
-            IsPublic = isPublic;
+            IsPublic = true;
             return this;
         }
 
@@ -197,7 +183,7 @@ namespace MystPaste.NET
             Validate();
             return new PasteForm
             {
-                ExpiresIn = ExpiresInString,
+                ExpiresIn = ExpiresIn,
                 Title = Title,
                 IsPublic = IsPublic,
                 IsPrivate = IsPrivate,
