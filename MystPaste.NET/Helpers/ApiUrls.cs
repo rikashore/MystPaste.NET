@@ -47,7 +47,7 @@ namespace MystPaste.NET
         /// <summary>
         /// The endpoint to get the expiration timestamp for a paste.
         /// </summary>
-        public static Uri ExpirationTimestamp(long timestamp, string duration)
+        public static Uri ExpirationTimestamp(long timestamp, ExpiresIn duration)
             => "time/expiresInToUnixTime?createdAt={0}&expiresIn={1}".FormatUri(timestamp, duration);
 
         /// <summary>
